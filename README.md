@@ -1,21 +1,19 @@
 # buildLibrealsense2TX
-Build librealsense 2.0 library on the NVIDIA Jetson TX Development kit. Jetson TX1 and Jetson TX2. Intel RealSense D400 series cameras.
+Build librealsense 2.0 library on the NVIDIA Jetson TK1 Development kit. Jetson TX1 and Jetson TX2. Intel RealSense D400 series cameras.
 
-This is for version L4T 28.2 / L4T 28.2.1 (JetPack 3.2.1)
+This is for version L4T 21.5
 librealsense v2.13.0
 
-July, 2018
+May, 2019
 
 In order for librealsense to work properly, the kernel image must be rebuilt and patches applied to the UVC module and some other support modules. Running installLibrealsense.sh alone will appear to make the camera mostly work but will be missing features such as frame metadata support ( https://github.com/IntelRealSense/librealsense/blob/master/doc/frame_metadata.md ).
-
-<strong>Note: </strong>On the Jetson TX1, space onboard the device is at a premium. If you are going to rebuild the kernel, flash the Jetson and then modify the kernel. Afterwards you can delete the kernel sources before installing the rest of librealsense and dependencies.
 
 <h2>Rebuilding the kernel</h2>
 The Jetsons have the v4l2 module built into the kernel image. The module should not be built as an external module, due to needed support for the carrier board camera. Because of this, a separate kernel Image should be generated, as well as any needed modules (such as the patched UVC module).
 
 In order to support Intel RealSense cameras with built in accelerometers and gyroscopes, modules need to be enabled. These modules are in the Industrial I/O (<strong> IIO</strong> ) device tree. The Jetson already has IIO support enabled in the kernel image to support the INA3321x power monitors. To support these other HID IIO devices, IIO_BUFFER must be enabled; it must be built into the kernel Image as well.
 
-Most developers will want to apply the needed patches, configure the kernel .config file to match their desired environment, and then build their kernel Image and modules. The scripts assumes that the source is in the usual place for the Jetson, i.e. /usr/src/kernel/kernel-4.4, though you may want to change it to match your needs. <strong>Note: </strong>You can examine buildPatchedKernel.sh for the general outline of building the kernel.
+Most developers will want to apply the needed patches, configure the kernel .config file to match their desired environment, and then build their kernel Image and modules. The scripts assumes that the source is in the usual place for the Jetson, i.e. /usr/src/kernel/kernel, though you may want to change it to match your needs. <strong>Note: </strong>You can examine buildPatchedKernel.sh for the general outline of building the kernel.
 
 The script scripts/patchKernel.sh will patch the kernel modules and Image to support the librealsense2 cameras. 
 
@@ -29,10 +27,9 @@ This script modifies the Industrial I/O device modules as needed and then ensure
 
 <em><strong>Note: </strong>The configureKernel.sh script sets the local version of the kernel to be the current local version, ie -tegra on a stock kernel. If that is not your intention, modify configureKernel.sh appropriately.</em>
 
-<h3>A nasty little alternative</h3>
+<h3>A alternative</h3>
 
-If you live a little more dangerously, and you are not concerned with building/maintaining your own kernel, there is a script which downloads the kernel source, patches it, builds a new kernel and installs it. To be clear, this is not good development methodology. 
-
+There is a script which downloads the kernel source, patches it, builds a new kernel and installs it.
 
 $ ./buildPatchedKernel.sh
 
