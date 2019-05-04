@@ -72,39 +72,12 @@ In order to accomplish this add the driver's name *hid_sensor_custom* to `/etc/m
 
 $ echo 'hid_sensor_custom' | sudo tee -a /etc/modules`
 
-<h2>Releases</h2>
-<h4>July, 2018</h4>
-<strong>v0.9</strong>
-<ul><li>librealsense now has native CUDA support (v2.13.0) </li>
-<li>librealsense v2.13.0 requires CMake 3.8+; Jetson has 3.5.1 so CMake is rebuilt</li>
-<li>L4T 28.2 / L4T 28.2.1 (JetPack 3.2.1)</li>
-<li>librealsense 2.13.0</li></ul>
-
-<h4>May, 2018</h4>
-<strong>v0.81</strong>
-<ul><li>Fix README.md directions</li>
-</ul>
-
-<h4>April, 2018</h4>
-<strong>v0.8</strong>
-<ul><li>Initial support for Jetson TX1</li>
-<li>Added CUDA support for yuy2->RGB/BGR/RGBA/BGRA</li>
-<li>L4T 28.2 (JetPack 3.2)</li>
-<li>librealsense 2.10.4</li></ul>
-
-
-<h4>April, 2018</h4>
-<strong>v0.5 (Development)</strong>
-<ul>
-<li>Initial support for Jetson TX2</li>
-<li>L4T 28.2 (JetPack 3.2)</li>
-<li>librealsense 2.10.2</li></ul>
-
 MIT License
 
 Copyright (c) 2017-2018 Jetsonhacks 
 Portions Copyright (c) 2015-2018 Raffaello Bonghi (jetson_easy)
 Portions Copyright (c) 2016 Mehran Maghoumi
+Portions Copyright (c) 2019 Mario Lüder
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
