@@ -7,7 +7,7 @@
 # In this script, we build 3.11 but do not install it
 
 LIBREALSENSE_DIRECTORY=${HOME}/librealsense
-LIBREALSENSE_VERSION=v2.13.0
+LIBREALSENSE_VERSION=v2.21.0
 INSTALL_DIR=$PWD
 
 
