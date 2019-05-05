@@ -7,9 +7,9 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 # e.g. echo "${red}red text ${green}green text${reset}"
-echo "${green}Adding Universe repository and updating${reset}"
-apt-add-repository universe
-apt-get update
+# echo "${green}Adding Universe repository and updating${reset}"
+# apt-add-repository universe
+# apt-get update
 echo "${green}Adding dependencies, graphics libraries and tools${reset}"
 apt-get install libusb-1.0-0-dev pkg-config -y
 # This is for ccmake
@@ -22,7 +22,7 @@ apt-get install build-essential -y
 apt-get install libglfw3-dev libgtk-3-dev -y
 
 # QtCreator for development; not required for librealsense core library
-apt-get install qtcreator -y
+# apt-get install qtcreator -y
 
 # From /etc/init/nv.conf
 

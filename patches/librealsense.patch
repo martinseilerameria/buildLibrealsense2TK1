@@ -1,0 +1,70 @@
+diff -Nuar librealsense/common/model-views.cpp librealsense.patch/common/model-views.cpp
+--- librealsense/common/model-views.cpp	2019-05-05 16:56:53.673905358 +0000
++++ librealsense.patch/common/model-views.cpp	2019-05-05 10:42:34.357147564 +0000
+@@ -3567,7 +3567,8 @@
+         static bool dont_show_this_error = false;
+         auto simplify_error_message = [](const std::string& s) {
+             std::regex e("\\b(0x)([^ ,]*)");
+-            return std::regex_replace(s, e, "address");
++            std::string addressStr = "address";
++            return std::regex_replace(s, e, addressStr);
+         };
+ 
+         std::string name = std::string(textual_icons::exclamation_triangle) + " Oops, something went wrong!";
+@@ -3971,6 +3972,7 @@
+                 }
+             }
+             catch (...) {}
++            std::this_thread::sleep_for(std::chrono::milliseconds(5));
+         }
+     }
+ 
+diff -Nuar librealsense/src/media/ros/ros_writer.cpp librealsense.patch/src/media/ros/ros_writer.cpp
+--- librealsense/src/media/ros/ros_writer.cpp	2019-05-05 16:56:53.966902700 +0000
++++ librealsense.patch/src/media/ros/ros_writer.cpp	2019-05-05 10:05:21.349248449 +0000
+@@ -14,6 +14,12 @@
+ {
+     using namespace device_serializer;
+ 
++    inline std::ios_base& hexfloat2(std::ios_base& str)
++    {
++        str.setf(std::ios_base::fixed | std::ios_base::scientific, std::ios_base::floatfield);
++        return str;
++    }
++
+     ros_writer::ros_writer(const std::string& file, bool compress_while_record) : m_file_path(file)
+     {
+         LOG_INFO("Compression while record is set to " << (compress_while_record ? "ON" : "OFF"));
+@@ -291,7 +297,7 @@
+         //Write frame's timestamp as metadata
+         diagnostic_msgs::KeyValue frame_timestamp_msg;
+         frame_timestamp_msg.key = FRAME_TIMESTAMP_MD_STR;
+-        frame_timestamp_msg.value = to_string() << std::hexfloat << pose->get_frame_timestamp();
++        frame_timestamp_msg.value = to_string() << librealsense::hexfloat2 << pose->get_frame_timestamp();
+         write_message(md_topic, timestamp, frame_timestamp_msg);
+ 
+         // Write the rest of the frame metadata and stream extrinsics
+diff -Nuar librealsense/third-party/json.hpp librealsense.patch/third-party/json.hpp
+--- librealsense/third-party/json.hpp	2019-05-05 16:56:54.082901648 +0000
++++ librealsense.patch/third-party/json.hpp	2019-05-05 09:44:35.564708057 +0000
+@@ -64,7 +64,7 @@
+     #endif
+ #elif defined(__GNUC__)
+     #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
+-    #if GCC_VERSION < 40900
++    #if GCC_VERSION < 40800
+         #error "unsupported GCC version - see https://github.com/nlohmann/json#supported-compilers"
+     #endif
+ #endif
+diff -Nuar librealsense/tools/depth-quality/depth-metrics.h librealsense.patch/tools/depth-quality/depth-metrics.h
+--- librealsense/tools/depth-quality/depth-metrics.h	2019-05-05 16:56:54.299899679 +0000
++++ librealsense.patch/tools/depth-quality/depth-metrics.h	2019-05-05 10:33:45.234894419 +0000
+@@ -151,7 +151,7 @@
+             const auto w = frame.get_width();
+             const auto h = frame.get_height();
+ 
+-            snapshot_metrics result{ w, h, roi, {} };
++            snapshot_metrics result{ w, h, roi, 0, 0, 0, 0, {},{} };
+ 
+             std::mutex m;
+ 

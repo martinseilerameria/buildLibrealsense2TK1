@@ -1,14 +1,15 @@
 #!/bin/bash
-# Builds the Intel Realsense library librealsense on a Jetson TX Development Kit
+# Builds the Intel Realsense library librealsense on a Jetson TK1 Development Kit
 # Copyright (c) 2016-18 Jetsonhacks 
 # MIT License
 
 # librealsense requires CMake 3.8+ to build; the repositories hold CMake 3.5.1
 # In this script, we build 3.11 but do not install it
 
-LIBREALSENSE_DIRECTORY=${HOME}/librealsense
+LIBREALSENSE_DIRECTORY=/mnt/project-sdcard/projects/librealsense
 LIBREALSENSE_VERSION=v2.21.0
 INSTALL_DIR=$PWD
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 
 
 BUILD_CMAKE=true
@@ -49,7 +50,7 @@ echo ""
 
 if [ ! -d "$LIBREALSENSE_DIRECTORY" ] ; then
   # clone librealsense
-  cd ${HOME}
+  cd "$(dirname "${LIBREALSENSE_DIRECTORY}")" 
   echo "${green}Cloning librealsense${reset}"
   git clone https://github.com/IntelRealSense/librealsense.git
 fi
@@ -74,6 +75,12 @@ fi
 # Checkout version the last tested version of librealsense
 git checkout $LIBREALSENSE_VERSION
 
+#patch librealsense to be compiled with gcc 4.8.5
+echo "${green}Applying Librealsense patches${reset}"
+LIBREALSENSEPATCHFILE="${SCRIPTPATH}/patches/librealsense.patch"
+
+patch -p1  < ${LIBREALSENSEPATCHFILE}
+
 # Install the dependencies
 cd $INSTALL_DIR
 sudo ./scripts/installDependencies.sh
@@ -92,14 +99,9 @@ fi
 cd $LIBREALSENSE_DIRECTORY
 git checkout $LIBREALSENSE_VERSION
 
-echo "${green}Applying Model-Views Patch${reset}"
-# The render loop of the post processing does not yield; add a sleep
-patch -p1 -i $INSTALL_DIR/patches/model-views.patch
-
-echo "${green}Applying Incomplete Frames Patch${reset}"
+#echo "${green}Applying Incomplete Frames Patch${reset}"
 # The Jetson tends to return incomplete frames at high frame rates; suppress error logging
-patch -p1 -i $INSTALL_DIR/patches/incomplete-frame.patch
-
+# patch -p1 -i $INSTALL_DIR/patches/incomplete-frame.patch
 
 echo "${green}Applying udev rules${reset}"
 # Copy over the udev rules so that camera can be run from user space
@@ -113,13 +115,17 @@ cd build
 echo "${green}Configuring Make system${reset}"
 # Use the CMake version that we built, must be > 3.8
 # Build with CUDA (default), the CUDA flag is USE_CUDA, ie -DUSE_CUDA=true
-${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true -DBUILD_WITH_CUDA=true
+# ${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true -DBUILD_WITH_CUDA=true
+#
+# Build without CUDA.
+${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true
+
 # The library will be installed in /usr/local/lib, header files in /usr/local/include
 # The demos, tutorials and tests will located in /usr/local/bin.
 echo "${green}Building librealsense, headers, tools and demos${reset}"
 
-NUM_CPU=$(nproc)
-time make -j$(($NUM_CPU - 1))
+NUM_CPU=4
+time make -j$(($NUM_CPU))
 if [ $? -eq 0 ] ; then
   echo "librealsense make successful"
 else
