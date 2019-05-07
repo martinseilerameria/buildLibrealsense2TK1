@@ -1,6 +1,6 @@
-diff -Nuar librealsense/common/model-views.cpp librealsense.patch/common/model-views.cpp
---- librealsense/common/model-views.cpp	2019-05-05 16:56:53.673905358 +0000
-+++ librealsense.patch/common/model-views.cpp	2019-05-05 10:42:34.357147564 +0000
+diff -Naur librealsense/common/model-views.cpp librealsense.patch/common/model-views.cpp
+--- librealsense/common/model-views.cpp	2019-05-07 19:51:33.139640655 +0000
++++ librealsense.patch/common/model-views.cpp	2019-05-05 17:23:38.327282219 +0000
 @@ -3567,7 +3567,8 @@
          static bool dont_show_this_error = false;
          auto simplify_error_message = [](const std::string& s) {
@@ -18,10 +18,120 @@ diff -Nuar librealsense/common/model-views.cpp librealsense.patch/common/model-v
 +            std::this_thread::sleep_for(std::chrono::milliseconds(5));
          }
      }
+diff -Naur librealsense/src/linux/backend-v4l2.cpp librealsense.patch/src/linux/backend-v4l2.cpp
+--- librealsense/src/linux/backend-v4l2.cpp	2019-05-07 19:51:33.461637937 +0000
++++ librealsense.patch/src/linux/backend-v4l2.cpp	2019-05-07 19:40:35.623232570 +0000
+@@ -18,7 +18,6 @@
+ #include <string>
+ #include <sstream>
+ #include <fstream>
+-#include <regex>
+ #include <thread>
+ #include <utility> // for pair
+ #include <chrono>
+@@ -39,7 +38,6 @@
+ #include <linux/uvcvideo.h>
+ #include <linux/videodev2.h>
+ #include <fts.h>
+-#include <regex>
+ #include <list>
  
-diff -Nuar librealsense/src/media/ros/ros_writer.cpp librealsense.patch/src/media/ros/ros_writer.cpp
---- librealsense/src/media/ros/ros_writer.cpp	2019-05-05 16:56:53.966902700 +0000
-+++ librealsense.patch/src/media/ros/ros_writer.cpp	2019-05-05 10:05:21.349248449 +0000
+ #include <sys/signalfd.h>
+@@ -746,10 +744,14 @@
+                             pending_formats.end())
+                         {
+                             const std::string s(to_string() << "!" << pixel_format.description);
+-                            std::regex rgx("!([0-9a-f]+)-.*");
+-                            std::smatch match;
+ 
+-                            if (std::regex_search(s.begin(), s.end(), match, rgx))
++                            // std::regex rgx("!([0-9a-f]+)-.*");
++                            // std::smatch match;
++                            // if (std::regex_search(s.begin(), s.end(), match, rgx))
++
++                            const std::string match = get_pixel_format_description_front(s);
++
++                            if (match.size() > 0)
+                             {
+                                 std::stringstream ss;
+                                 ss <<  match[1];
+@@ -1202,6 +1204,30 @@
+             return range;
+         }
+ 
++        std::string v4l_uvc_device::get_pixel_format_description_front(const std::string & fullNumber) const
++        {
++            std::string frontNumber;
++
++            if (fullNumber.empty())
++            {
++                return frontNumber;
++            }
++
++            if (fullNumber[0] != '!')
++            {
++                return frontNumber;
++            }
++
++            const std::string::size_type delimitterPos = fullNumber.find("-");
++
++            if (delimitterPos != std::string::npos && delimitterPos > 1)
++            {
++                frontNumber = fullNumber.substr(1, delimitterPos - 1);    
++            }
++
++            return frontNumber;
++	}
++
+         std::vector<stream_profile> v4l_uvc_device::get_profiles() const
+         {
+             std::vector<stream_profile> results;
+@@ -1233,10 +1259,12 @@
+                         known_problematic_formats.end())
+                     {
+                         const std::string s(to_string() << "!" << pixel_format.description);
+-                        std::regex rgx("!([0-9a-f]+)-.*");
+-                        std::smatch match;
++                        const std::string match  = get_pixel_format_description_front(s); 
++                        // std::regex rgx("!([0-9a-f]+)-.*");
++                        // std::smatch match;
+ 
+-                        if (std::regex_search(s.begin(), s.end(), match, rgx))
++                        // if (std::regex_search(s.begin(), s.end(), match, rgx))
++                        if (match.size() > 0)
+                         {
+                             std::stringstream ss;
+                             ss <<  match[1];
+diff -Naur librealsense/src/linux/backend-v4l2.h librealsense.patch/src/linux/backend-v4l2.h
+--- librealsense/src/linux/backend-v4l2.h	2019-05-07 19:51:33.461637937 +0000
++++ librealsense.patch/src/linux/backend-v4l2.h	2019-05-07 19:39:24.857828463 +0000
+@@ -17,7 +17,6 @@
+ #include <string>
+ #include <sstream>
+ #include <fstream>
+-#include <regex>
+ #include <thread>
+ #include <utility> // for pair
+ #include <chrono>
+@@ -37,7 +36,6 @@
+ #include <linux/uvcvideo.h>
+ #include <linux/videodev2.h>
+ #include <fts.h>
+-#include <regex>
+ #include <list>
+ 
+ #pragma GCC diagnostic ignored "-Wpedantic"
+@@ -346,6 +344,7 @@
+             std::vector<int>  _fds;             // list the file descriptors to be monitored during frames polling
+ 
+         private:
++            std::string get_pixel_format_description_front(const std::string & fullNumber) const;
+             int _fd = 0;          // prevent unintentional abuse in derived class
+             int _stop_pipe_fd[2]; // write to _stop_pipe_fd[1] and read from _stop_pipe_fd[0]
+ 
+diff -Naur librealsense/src/media/ros/ros_writer.cpp librealsense.patch/src/media/ros/ros_writer.cpp
+--- librealsense/src/media/ros/ros_writer.cpp	2019-05-07 19:51:33.468637878 +0000
++++ librealsense.patch/src/media/ros/ros_writer.cpp	2019-05-05 17:23:38.329282201 +0000
 @@ -14,6 +14,12 @@
  {
      using namespace device_serializer;
@@ -44,9 +154,9 @@ diff -Nuar librealsense/src/media/ros/ros_writer.cpp librealsense.patch/src/medi
          write_message(md_topic, timestamp, frame_timestamp_msg);
  
          // Write the rest of the frame metadata and stream extrinsics
-diff -Nuar librealsense/third-party/json.hpp librealsense.patch/third-party/json.hpp
---- librealsense/third-party/json.hpp	2019-05-05 16:56:54.082901648 +0000
-+++ librealsense.patch/third-party/json.hpp	2019-05-05 09:44:35.564708057 +0000
+diff -Naur librealsense/third-party/json.hpp librealsense.patch/third-party/json.hpp
+--- librealsense/third-party/json.hpp	2019-05-07 19:51:33.601636756 +0000
++++ librealsense.patch/third-party/json.hpp	2019-05-05 17:23:38.336282137 +0000
 @@ -64,7 +64,7 @@
      #endif
  #elif defined(__GNUC__)
@@ -56,9 +166,9 @@ diff -Nuar librealsense/third-party/json.hpp librealsense.patch/third-party/json
          #error "unsupported GCC version - see https://github.com/nlohmann/json#supported-compilers"
      #endif
  #endif
-diff -Nuar librealsense/tools/depth-quality/depth-metrics.h librealsense.patch/tools/depth-quality/depth-metrics.h
---- librealsense/tools/depth-quality/depth-metrics.h	2019-05-05 16:56:54.299899679 +0000
-+++ librealsense.patch/tools/depth-quality/depth-metrics.h	2019-05-05 10:33:45.234894419 +0000
+diff -Naur librealsense/tools/depth-quality/depth-metrics.h librealsense.patch/tools/depth-quality/depth-metrics.h
+--- librealsense/tools/depth-quality/depth-metrics.h	2019-05-07 19:51:33.860634570 +0000
++++ librealsense.patch/tools/depth-quality/depth-metrics.h	2019-05-05 17:23:38.338282118 +0000
 @@ -151,7 +151,7 @@
              const auto w = frame.get_width();
              const auto h = frame.get_height();
@@ -67,4 +177,3 @@ diff -Nuar librealsense/tools/depth-quality/depth-metrics.h librealsense.patch/t
 +            snapshot_metrics result{ w, h, roi, 0, 0, 0, 0, {},{} };
  
              std::mutex m;
- 
