@@ -6,7 +6,7 @@
 # librealsense requires CMake 3.8+ to build; the repositories hold CMake 3.5.1
 # In this script, we build 3.11 but do not install it
 
-LIBREALSENSE_DIRECTORY=/mnt/project-sdcard/projects/librealsense
+LIBREALSENSE_DIRECTORY=/home/ubuntu/RealSense/librealsense
 LIBREALSENSE_VERSION=v2.21.0
 INSTALL_DIR=$PWD
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
