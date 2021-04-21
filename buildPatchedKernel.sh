@@ -5,7 +5,7 @@
 
 CLEANUP=true
 
-LIBREALSENSE_DIRECTORY=/mnt/project-sdcard/projects/librealsense
+LIBREALSENSE_DIRECTORY=/home/ubuntu/RealSense/librealsense
 LIBREALSENSE_VERSION=v2.21.0
 
 
