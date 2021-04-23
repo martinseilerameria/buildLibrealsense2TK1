@@ -85,3 +85,42 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+Install Jetpack 3.1 with Toradex Easy Installer
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade
+sudo apt-get install git
+
+Make new folder RealSense in home directory and clone
+git clone https://github.com/mayio/buildLibrealsense2TK1.git
+git clone https://github.com/IntelRealSense/librealsense.git
+
+Goto buildLibrealsense2TK1 repo change LIBREALSENSE_DIRECTORY variable to your librealsense location in the files buildPatchedKernel.sh and installLibRealsense.sh
+
+sudo apt-get install libxinerama-dev
+sudo apt-get install libxcursor-dev
+sudo apt-get install libgtk-3-dev
+
+Run buildPatchedKernel.sh
+
+(If there is an error with makeKernel.sh script run it manually from shell: ./makeKernel.sh and afterwards ./copyImage.sh. Finally reboot system)(Problem could be solved by deleting "cd $KERNEL_BUILD_DIR" in the script)
+
+sudo apt remove gcc
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update
+sudo apt-get install gcc-7 g++-7 -y
+sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc
+sudo ln -s /usr/bin/g++-7 /usr/bin/g++
+sudo ln -s /usr/bin/gcc-7 /usr/bin/cc
+sudo ln -s /usr/bin/g++-7 /usr/bin/c++
+
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo nano /etc/fstab
+
+Then manually add following line to /etc/fstab :
+/swapfile none swap sw 0 0
+
+Reboot Apalis
+
+Run installLibRealsense.sh
