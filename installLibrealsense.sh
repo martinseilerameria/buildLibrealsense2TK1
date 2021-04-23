@@ -118,8 +118,8 @@ echo "${green}Configuring Make system${reset}"
 # ${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true -DBUILD_WITH_CUDA=true
 #
 # Build without CUDA.
-${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true
-
+#${HOME}/CMake/bin/cmake ../ -DBUILD_EXAMPLES=true
+~/CMake/bin/cmake ../ -DFORCE_LIBUVC=true -DBUILD_EXAMPLES=true -DFORCE_LIBUVC=true
 # The library will be installed in /usr/local/lib, header files in /usr/local/include
 # The demos, tutorials and tests will located in /usr/local/bin.
 echo "${green}Building librealsense, headers, tools and demos${reset}"
