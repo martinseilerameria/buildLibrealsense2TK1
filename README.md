@@ -124,3 +124,23 @@ Then manually add following line to /etc/fstab :
 Reboot Apalis
 
 Run installLibRealsense.sh
+
+
+
+---
+
+sudo add-apt-repository main
+
+sudo add-apt-repository universe
+
+sudo add-apt-repository multiverse
+
+sudo add-apt-repository restricted
+
+sudo apt-get update && sudo apt-get upgrade
+
+sudo apt-mark hold xserver-xorg-core
+
+sudo do-release-upgrade
+
+sudo apt-get install gnome-session-flashback
