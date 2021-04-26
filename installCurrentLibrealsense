@@ -1,0 +1,29 @@
+#!/bin/bash
+
+LIBREALSENSE_DIRECTORY=/home/ubuntu/RealSense/librealsense
+git clone https://github.com/IntelRealSense/librealsense.git
+
+
+sudo apt remove gcc -y
+sudo apt purge gcc -y
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update
+sudo apt-get install gcc-7 g++-7 -y
+sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc
+sudo ln -s /usr/bin/g++-7 /usr/bin/g++
+sudo ln -s /usr/bin/gcc-7 /usr/bin/cc
+sudo ln -s /usr/bin/g++-7 /usr/bin/c++
+
+
+cd $LIBREALSENSE_DIRECTORY
+sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules && udevadm trigger
+
+
+mkdir build 
+cd build
+~/CMake/bin/cmake ../ -DFORCE_LIBUVC=true -DBUILD_EXAMPLES=true -DCMAKE_BUILD_TYPE=release
+
+NUM_CPU=4
+time make -j$(($NUM_CPU))
+sudo make install
