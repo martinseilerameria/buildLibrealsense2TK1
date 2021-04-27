@@ -6,7 +6,11 @@
 # sudo apt-get upgrade
 # sudo apt-get dist-upgrade
 
-
+# sudo apt-get install git
+# cd ~
+# mkdir RealSense
+# cd RealSense
+# git clone https://github.com/martinseilerameria/buildLibrealsense2TK1.git
 
 # update gcc
 sudo apt remove gcc -y
@@ -20,7 +24,7 @@ sudo ln -s /usr/bin/gcc-7 /usr/bin/cc
 sudo ln -s /usr/bin/g++-7 /usr/bin/c++
 
 # install cmake
-cd ~
+
 wget https://github.com/Kitware/CMake/releases/download/v3.20.1/cmake-3.20.1.tar.gz
 tar xf cmake-3.20.1.tar.gz
 cd cmake-3.20.1
