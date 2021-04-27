@@ -12,6 +12,7 @@
 # cd RealSense
 # git clone https://github.com/martinseilerameria/buildLibrealsense2TK1.git
 # chmod +x  ./buildLibrealsense2TK1/prepare_system.sh
+# chmod +x  ./buildLibrealsense2TK1/installCurrentLibrealsense.sh
 # ./buildLibrealsense2TK1/prepare_system.sh
 
 # update gcc
