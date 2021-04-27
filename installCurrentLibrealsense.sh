@@ -9,8 +9,8 @@ sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && udevadm trigger
 
 # dependencies
-apt-get install libusb-1.0-0-dev pkg-config -y
-apt-get install libglfw3-dev libgtk-3-dev -y
+sudo apt-get install libusb-1.0-0-dev pkg-config -y
+sudo apt-get install libglfw3-dev libgtk-3-dev -y
 
 # make and install
 mkdir build 
