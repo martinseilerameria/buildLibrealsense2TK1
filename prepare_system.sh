@@ -1,9 +1,5 @@
 #!/bin/bash
 
-sudo apt-get update
-sudp apt-get upgrade
-sudo apt-get dist-upgrade
-
 # update gcc
 sudo apt remove gcc -y
 sudo apt purge gcc -y
