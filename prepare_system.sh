@@ -11,6 +11,7 @@
 # mkdir RealSense
 # cd RealSense
 # git clone https://github.com/martinseilerameria/buildLibrealsense2TK1.git
+# ./buildLibrealsense2TK1/prepare_system.sh
 
 # update gcc
 sudo apt remove gcc -y
