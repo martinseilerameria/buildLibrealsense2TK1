@@ -14,7 +14,6 @@ sudo apt-get install libglfw3-dev libgtk-3-dev -y
 
 sudo apt-get install libxinerama-dev -y
 sudo apt-get install libxcursor-dev -y
-sudo apt-get install libgtk-3-dev -y
 
 # make and install
 mkdir build 
