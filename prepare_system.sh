@@ -26,7 +26,7 @@ sudo ln -s /usr/bin/gcc-7 /usr/bin/cc
 sudo ln -s /usr/bin/g++-7 /usr/bin/c++
 
 # install cmake
-
+sudo apt-get install libssl-dev -y
 wget https://github.com/Kitware/CMake/releases/download/v3.20.1/cmake-3.20.1.tar.gz
 tar xf cmake-3.20.1.tar.gz
 cd cmake-3.20.1
