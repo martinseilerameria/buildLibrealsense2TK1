@@ -12,9 +12,9 @@ sudo udevadm control --reload-rules && udevadm trigger
 sudo apt-get install libusb-1.0-0-dev pkg-config -y
 sudo apt-get install libglfw3-dev libgtk-3-dev -y
 
-sudo apt-get install libxinerama-dev
-sudo apt-get install libxcursor-dev
-sudo apt-get install libgtk-3-dev
+sudo apt-get install libxinerama-dev -y
+sudo apt-get install libxcursor-dev -y
+sudo apt-get install libgtk-3-dev -y
 
 # make and install
 mkdir build 
