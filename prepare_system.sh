@@ -38,5 +38,5 @@ sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-echo "/swapfile none swap sw 0 0" | tee -a /etc/fstab > /dev/null
+sudo echo "/swapfile none swap sw 0 0" | tee -a /etc/fstab > /dev/null
 sudo reboot
