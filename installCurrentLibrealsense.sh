@@ -1,10 +1,10 @@
 #!/bin/bash
-
+cd ~/RealSense
 LIBREALSENSE_DIRECTORY=/home/ubuntu/RealSense/librealsense
 git clone https://github.com/IntelRealSense/librealsense.git
 
 # add udev rules
-cd $LIBREALSENSE_DIRECTORY
+cd librealsense
 sudo cp config/99-realsense-libusb.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && udevadm trigger
 
