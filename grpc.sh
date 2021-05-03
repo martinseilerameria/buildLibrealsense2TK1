@@ -32,7 +32,7 @@ cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
 make -j
 make install
 
-export LD_LIBRARY_PATH=~/.local:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
 
 # check if cpp helloworld example compiles
 cd ~/RealSense/grpc/examplescpp/helloworld
