@@ -33,7 +33,7 @@ make install
 #export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
 
 # check if cpp helloworld example compiles
-cd ../../grpc/examplescpp/helloworld
+cd ../../examplescpp/helloworld
 mkdir -p cmake/build
 cd cmake/build
 cmake -DCMAKE_PREFIX_PATH=$MY_INSTALL_DIR ../..
