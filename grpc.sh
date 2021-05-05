@@ -13,7 +13,7 @@ cd grpc
 git submodule update --init
 
 
-export MY_INSTALL_DIR=$CMAKE_PREFIX_PATH
+export MY_INSTALL_DIR=$HOME/.local
 mkdir -p $MY_INSTALL_DIR
 mkdir -p cmake/build
 cd cmake/build
