@@ -7,7 +7,9 @@ This is for
 * Linux Kernel 3.10.40-2.8.6+g2c7a3c3af726
 
 
-If Toradex Easy Installer is not already running: download and flash Toradex Easy Installer.
+### Flash Toradex Easy Installer
+
+Download and flash Toradex Easy Installer.
 https://developer.toradex.com/knowledge-base/load-toradex-easy-installer
 https://docs.toradex.com/104851-apalis-tk1-toradexeasyinstaller.zip
 
@@ -19,11 +21,12 @@ Start Apalis.
 Remove Recovery pins.
 Run ./recovery-linux.sh
 
-Toradex Installer:
-Install Jetpack 3.1  image
+### Toradex Installer
 
+Install Jetpack 3.1 image
 
-
+### Prepare system
+```
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get dist-upgrade
@@ -36,10 +39,11 @@ git clone https://github.com/martinseilerameria/buildLibrealsense2TK1.git
 chmod +x  ./buildLibrealsense2TK1/prepare_system.sh
 chmod +x  ./buildLibrealsense2TK1/install.sh
 ./buildLibrealsense2TK1/prepare_system.sh
+```
+Wait for reboot.
 
-
-Wait for reboot
-
+### Install librealsense, OpenCV and gRPC
+```
 cd ~/RealSense
 ./buildLibrealsense2TK1/install.sh
-
+```
