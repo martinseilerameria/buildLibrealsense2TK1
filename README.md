@@ -9,19 +9,17 @@ This is for
 
 ### Flash Toradex Easy Installer
 
-Download and flash Toradex Easy Installer.
-https://developer.toradex.com/knowledge-base/load-toradex-easy-installer
-https://docs.toradex.com/104851-apalis-tk1-toradexeasyinstaller.zip
+1. [Download](https://docs.toradex.com/104851-apalis-tk1-toradexeasyinstaller.zip) and unzip Toradex Easy Installer.
 
-Unzip file.
-Connect Apalis and host machine via Micro USB cable. 
-Shut down Apalis.
-Connect Recovery pins.
-Start Apalis.
-Remove Recovery pins.
-Run ./recovery-linux.sh
+2. Connect Apalis with host machine via Micro USB cable. 
+3. Shut down Apalis.
+4. Short two recovery connectors (round, next to green LED).
+5. Start Apalis.
+6. Unshort recovery connectors.
+7. Go to unzipped directory and run ./recovery-linux.sh
+8. Toradex Easy Installer will boot
 
-### Toradex Installer
+### Toradex Easy Installer
 
 Install Jetpack 3.1 image
 
