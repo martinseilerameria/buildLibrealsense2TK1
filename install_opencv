@@ -1,0 +1,7 @@
+cd ~/RealSense
+git clone https://github.com/opencv/opencv.git --branch 4.2.0
+cd opencv
+mkdir build && cd build
+cmake  ..
+cmake --build .
+sudo make install
