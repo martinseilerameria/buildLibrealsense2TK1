@@ -1,9 +1,10 @@
-# Build librealsense2 for Jetson TK1
+# Build latest librealsense2 and grpc on Toradex Apalis TK1
 Build librealsense 2.0 library on the NVIDIA Jetson TK1 Development kit. Jetson TX1 and Jetson TX2. Intel RealSense D400 series cameras.
 
 This is for
-* L4T 21.5
-* librealsense v2.21.0
+* NVIDIA Jetpack 3.1
+* L4T 21.7
+* BSP 2.8b6
 * Linux Kernel 3.10.40-ga7da876
 
 May, 2019
