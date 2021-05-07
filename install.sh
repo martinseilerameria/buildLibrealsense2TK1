@@ -39,7 +39,9 @@ sudo make install
 
 
 # GRPC
-
+cd ~/RealSense
+sudo bash -c "printf 'LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local:LD_LIBRARY_PATH' >> $HOME/.bashrc"
+sudo bash -c "printf 'PATH=$HOME/.local/bin:PATH' >> $HOME/.bashrc"
 sudo apt-get install autoconf libtool
 
 git clone -b v1.37.x https://github.com/grpc/grpc
@@ -52,22 +54,18 @@ mkdir -p $MY_INSTALL_DIR
 mkdir -p cmake/build
 cd cmake/build
 
-~/RealSense/cmake-3.20.1/bin/cmake -DBUILD_SHARED_LIBS=ON -DgRPC_INSTALL=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..
+cmake -DBUILD_SHARED_LIBS=ON -DgRPC_INSTALL=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..
 make -j4
-make install
+sudo make install
 
 #mkdir -p third_party/abseil-cpp/cmake/build
-#pushd third_party/abseil-cpp/cmake/build
-#cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
-#      -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
-#      ../..
+#cd third_party/abseil-cpp/cmake/build
+#cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ../..
 #make -j
 #make install
 
-#export LD_LIBRARY_PATH=~/.local/lib:$LD_LIBRARY_PATH
-
 # check if cpp helloworld example compiles
-cd ../../examples/cpp/helloworld
+cd ~/RealSense/grpc/examples/cpp/helloworld
 mkdir -p cmake/build
 cd cmake/build
 cmake -DCMAKE_PREFIX_PATH=$MY_INSTALL_DIR ../..
