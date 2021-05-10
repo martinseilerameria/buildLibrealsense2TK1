@@ -58,11 +58,12 @@ cmake -DBUILD_SHARED_LIBS=ON -DgRPC_INSTALL=ON -DCMAKE_BUILD_TYPE=Release -DCMAK
 make -j4
 sudo make install
 
-#mkdir -p third_party/abseil-cpp/cmake/build
-#cd third_party/abseil-cpp/cmake/build
-#cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ../..
-#make -j
-#make install
+cd ~/RealSense/grpc/third_party/abseil-cpp/
+mkdir -p cmake/build
+cd cmake/build
+cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ../..
+make -j
+make install
 
 # check if cpp helloworld example compiles
 cd ~/RealSense/grpc/examples/cpp/helloworld
