@@ -63,7 +63,7 @@ mkdir -p cmake/build
 cd cmake/build
 cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE ../..
 make -j
-make install
+sudo make install
 
 # check if cpp helloworld example compiles
 cd ~/RealSense/grpc/examples/cpp/helloworld
