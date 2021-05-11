@@ -44,7 +44,7 @@ sudo bash -c "printf 'LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local:LD_LIBRARY_P
 sudo bash -c "printf 'PATH=$HOME/.local/bin:PATH' >> $HOME/.bashrc"
 sudo apt-get install autoconf libtool
 
-git clone -b v1.37.x https://github.com/grpc/grpc
+git clone https://github.com/grpc/grpc
 cd grpc
 git submodule update --init
 
