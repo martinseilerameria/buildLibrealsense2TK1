@@ -34,6 +34,9 @@ cd cmake-3.20.1
 ./configure && make
 sudo make install
 
+sudo bash -c "printf 'LD_LIBRARY_PATH=\$HOME/.local/lib:\$HOME/.local:\$LD_LIBRARY_PATH \n' >> $HOME/.profile"
+sudo bash -c "printf 'PATH=\$HOME/.local/bin:\$PATH\n' >> $HOME/.profile"
+
 # swap file
 sudo fallocate -l 2G /swapfile
 sudo chmod 600 /swapfile

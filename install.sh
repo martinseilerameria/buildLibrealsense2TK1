@@ -40,8 +40,6 @@ sudo make install
 
 # GRPC
 cd ~/RealSense
-sudo bash -c "printf 'LD_LIBRARY_PATH=$HOME/.local/lib:$HOME/.local:LD_LIBRARY_PATH' >> $HOME/.bashrc"
-sudo bash -c "printf 'PATH=$HOME/.local/bin:PATH' >> $HOME/.bashrc"
 sudo apt-get install autoconf libtool
 
 git clone https://github.com/grpc/grpc
