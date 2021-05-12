@@ -41,7 +41,7 @@ sudo make install
 
 # GRPC
 cd ~/RealSense
-sudo apt-get install autoconf libtool
+sudo apt-get install autoconf libtool -y
 
 git clone https://github.com/grpc/grpc
 cd grpc
