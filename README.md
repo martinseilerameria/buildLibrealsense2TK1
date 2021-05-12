@@ -20,7 +20,7 @@ This is for
 
 ### Toradex Easy Installer
 
-Install Jetpack 3.1 image
+Install Linux 4 Tegra image
 
 ### Prepare system
 ```
